@@ -20,3 +20,36 @@ model User {
   
   email    String
 }
+
+model Book {
+  bookId       String @id @default(auto()) @map("_id") @db.ObjectId
+  titre        String @unique
+  auteur       String
+  description  String
+  anneePub      int
+  
+  ISBN         String
+  
+}
+
+model Notification {
+  notificationId       String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String 
+  bookId    String
+  
+  message   String
+  book         Book   @relation(fields: [bookId], references: [id])
+  user         User   @relation(fields: [userId], references: [id])
+}
+
+ model emprunt{
+
+  empruntId  String @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String 
+  bookId       String
+  dateEmprunt  date
+  dateRetour   date
+
+  book         Book   @relation(fields: [bookId], references: [id])
+  user         User   @relation(fields: [userId], references: [id])
+ }
