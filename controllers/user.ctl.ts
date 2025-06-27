@@ -64,7 +64,45 @@ const usersCtl = {
                 res.status(404).json({ msg: "user not found" })
              }
           }
-       }
+       },
+       updateUser: async(req:Request,res:Response)=>{
+        
+         const { name, password, email }: User = req.body;
+         const { id } = req.params;
+         if(!id){
+            res.status(403).json({msg: "id introuvable"})
+         }else{
+   
+            if (!name || !password  || !email) {
+               
+               res.status(400).json({ msg: "veuillez remplir tout les champs" })
+         }
+         else{
+            
+            const updateUsers= await client.user.update({
+              
+               where :{
+                 id
+   
+               },
+               data:{
+                  name,
+                  password,
+                  email 
+               
+               }
+   
+            })
+            console.log("User Profile updated");
+            res.status(200).send({
+                msg: "Updated successfully",
+                newUserProfile: updateUsers
+   })
+      }
+   
+         
+      }
+   },
        
 
 
