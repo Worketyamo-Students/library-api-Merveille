@@ -103,7 +103,21 @@ const usersCtl = {
          
       }
    },
-       
+   deleteUser :async(req:Request,res:Response)=>{
+      const {id}=req.params;
+      if(!id){
+         res.status(403).json({msg: "id introuvable"})
+      }
+   const deleteUser = await client.user.delete({
+      where :{
+         id
+       }
+   })
+   res.status(200).send({
+      msg: "deleted successfully",
+      newUserProfile: deleteUser
+   })
+    }, 
 
 
 }
