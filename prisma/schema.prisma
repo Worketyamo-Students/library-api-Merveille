@@ -19,6 +19,8 @@ model User {
   password String
   
   email    String
+  emprunts      emprunt[]   
+  notifications Notification[]
 }
 
 model Book {
@@ -26,10 +28,11 @@ model Book {
   titre        String @unique
   auteur       String
   description  String
-  anneePub      int
+  anneePub      Int
   
   ISBN         String
-  
+   emprunts      emprunt[]      
+  notifications Notification[] 
 }
 
 model Notification {
@@ -38,18 +41,18 @@ model Notification {
   bookId    String
   
   message   String
-  book         Book   @relation(fields: [bookId], references: [id])
+  book         Book   @relation(fields: [bookId], references: [bookId])
   user         User   @relation(fields: [userId], references: [id])
 }
 
  model emprunt{
 
   empruntId  String @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String 
+  userId      String 
   bookId       String
-  dateEmprunt  date
-  dateRetour   date
+  dateEmprunt  DateTime
+  dateRetour   DateTime
 
-  book         Book   @relation(fields: [bookId], references: [id])
+  book         Book   @relation(fields: [bookId], references: [bookId])
   user         User   @relation(fields: [userId], references: [id])
  }
