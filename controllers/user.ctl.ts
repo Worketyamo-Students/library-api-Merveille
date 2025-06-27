@@ -44,8 +44,28 @@ const usersCtl = {
             msg : "user created successfully"
          })
       }
-   }
-   
+   },
+   AuthentificationUser: async (req: Request, res: Response) => {
+    const {password,  email }: User = req.body
+
+    if (!password  || !email) {
+       res.status(400).json({ msg: "veuillez remplir tout les champs" })
+    } else {
+
+              const user = await client.user.findFirst({
+                where: {
+                    password, email
+                }
+             })
+             if (user) {
+
+                res.status(200).json({ msg:"4874g324g3r"})
+             } else {
+                res.status(404).json({ msg: "user not found" })
+             }
+          }
+       }
+
 
 }
 
