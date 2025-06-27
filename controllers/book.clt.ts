@@ -88,7 +88,21 @@ const booksCtl = {
          
       }
    },
-//   
+ deleteBook :async(req:Request,res:Response)=>{
+      const {bookId}=req.params;
+      if(!bookId){
+         res.status(403).json({msg: "id introuvable"})
+      }
+   const deleteBook = await client.book.delete({
+      where :{
+         bookId
+       }
+   })
+   res.status(200).send({
+      msg: "deleted successfully",
+      newUserProfile: deleteBook
+   })
+    },   
 getAllBooks : async(req:Request,res:Response)=>{
 
     const books = await client.user.findMany()
