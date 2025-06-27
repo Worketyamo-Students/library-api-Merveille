@@ -3,7 +3,7 @@ import usersCtl from "../controllers/user.ctl.ts";
 const users = Router()
 
 
-users.get('/:id', usersCtl.getUsers)
+users.get('/profile/:id', usersCtl.getUsers)
 users.post('/signup',usersCtl.createUser)
 users.post('/login',usersCtl.AuthentificationUser)
 //users.put('/:id' ,usersCtl.updateUser)
