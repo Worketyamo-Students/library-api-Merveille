@@ -19,7 +19,7 @@ model User {
   password String
   
   email    String
-  emprunts      emprunt[]   
+  emprunts      Emprunt[]   
   notifications Notification[]
 }
 
@@ -29,9 +29,10 @@ model Book {
   auteur       String
   description  String
   anneePub      Int
+  disponible  Boolean  @default(true) 
   
   ISBN         String
-   emprunts      emprunt[]      
+   emprunts      Emprunt[]      
   notifications Notification[] 
 }
 
@@ -45,7 +46,7 @@ model Notification {
   user         User   @relation(fields: [userId], references: [id])
 }
 
- model emprunt{
+ model Emprunt{
 
   empruntId  String @id @default(auto()) @map("_id") @db.ObjectId
   userId      String 

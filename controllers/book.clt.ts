@@ -27,9 +27,9 @@ const booksCtl = {
       }
    },
    createBook: async (req: Request, res: Response) => {
-      const { titre,auteur,description,anneePub,ISBN} :Book= req.body;
+      const { titre,auteur,description,anneePub,ISBN,disponible} :Book= req.body;
 
-      if (!titre || !auteur  || !description || !anneePub|| !ISBN) {
+      if (!titre || !auteur  || !description || !anneePub|| !ISBN ||!disponible ) {
          res.status(400).json({ msg: "veuillez remplir tout les champs" })
       } else {
         //const saltRounds = 10;
@@ -37,7 +37,7 @@ const booksCtl = {
 
          const book = await client.book.create({
             data: {
-               titre,  auteur,  description,anneePub,ISBN
+               titre,  auteur,  description,anneePub,ISBN,disponible
             }
          })
 
@@ -50,13 +50,13 @@ const booksCtl = {
 
        updatebook: async(req:Request,res:Response)=>{
         
-         const { titre, auteur, description , anneePub, ISBN }: Book = req.body;
+         const { titre, auteur, description , anneePub, ISBN,disponible }: Book = req.body;
          const {bookId } = req.params;
          if(!bookId){
             res.status(403).json({msg: "id introuvable"})
          }else{
    
-            if (!titre || !auteur  || !description || !anneePub|| !ISBN) {
+            if (!titre || !auteur  || !description || !anneePub|| !ISBN || !disponible) {
                
                res.status(400).json({ msg: "veuillez remplir tout les champs" })
          }

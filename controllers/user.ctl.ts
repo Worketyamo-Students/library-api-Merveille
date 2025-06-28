@@ -13,6 +13,7 @@ const usersCtl = {
          res.status(403).json({ msg: "No ID provided" })
       }
       else {
+         // verifie si l'user existe
          const user = await client.user.findUnique({
             where: {
                id
@@ -28,7 +29,7 @@ const usersCtl = {
    createUser: async (req: Request, res: Response) => {
       const { name, password,  email }: User = req.body
       if (!name || !password  || !email) {
-         res.status(400).json({ msg: "veuillez remplir tout les champs" })
+         res.status(400).json({ msg: "veuillez remplir tous les champs" })
       } else {
         const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
@@ -49,17 +50,21 @@ const usersCtl = {
     const {password,  email }: User = req.body
 
     if (!password  || !email) {
-       res.status(400).json({ msg: "veuillez remplir tout les champs" })
+       res.status(400).json({ msg: "veuillez remplir tous les champs" })
     } else {
 
               const user = await client.user.findFirst({
                 where: {
-                    password, email
+                    email: email,
                 }
              })
              if (user) {
+               const pass = await bcrypt.compare(password,user.password)
+               if (!pass) {
+                 res.status(401).json({ msg: "Mot de passe incorrect" });
+           }
 
-                res.status(200).json({ msg:"4874g324g3r"})
+                res.status(200).json({ msg:"authentifacation reussie"})
              } else {
                 res.status(404).json({ msg: "user not found" })
              }
@@ -75,7 +80,7 @@ const usersCtl = {
    
             if (!name || !password  || !email) {
                
-               res.status(400).json({ msg: "veuillez remplir tout les champs" })
+               res.status(400).json({ msg: "veuillez remplir tous les champs" })
          }
          else{
             
